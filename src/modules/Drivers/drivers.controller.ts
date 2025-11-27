@@ -41,10 +41,10 @@ export class DriversController {
     description: 'Number of items to take for pagination',
   })
   @ApiQuery({
-    name: 'plate',
+    name: 'name',
     type: String,
     required: false,
-    description: 'Filter drivers by plate',
+    description: 'Filter drivers by name',
   })
   async findAll(
     @Query('skip') skip?: number,
