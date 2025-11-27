@@ -78,7 +78,7 @@ describe('VehicleUsageService', () => {
     };
 
     it('should start a vehicle usage successfully', async () => {
-      repository.findOne.mockResolvedValue(null); // validations OK
+      repository.findOne.mockResolvedValue(null);
 
       const created = mockUsage({});
       const saved = mockUsage({ id: '123' });
@@ -96,7 +96,7 @@ describe('VehicleUsageService', () => {
     });
 
     it('should return error if vehicle is already in use', async () => {
-      repository.findOne.mockResolvedValueOnce(mockUsage({})); // first validation fails
+      repository.findOne.mockResolvedValueOnce(mockUsage({}));
 
       const result = await service.startUsage(dto);
 
@@ -105,8 +105,8 @@ describe('VehicleUsageService', () => {
     });
 
     it('should return error if driver is already in use', async () => {
-      repository.findOne.mockResolvedValueOnce(null); // vehicle ok
-      repository.findOne.mockResolvedValueOnce(mockUsage({})); // driver in use
+      repository.findOne.mockResolvedValueOnce(null);
+      repository.findOne.mockResolvedValueOnce(mockUsage({}));
 
       const result = await service.startUsage(dto);
 
