@@ -11,5 +11,5 @@ export class VehiclesEntity extends BaseEntity {
   model: string;
 
   @Column({ type: 'varchar', length: 10 })
-  color: number;
+  color: string;
 }

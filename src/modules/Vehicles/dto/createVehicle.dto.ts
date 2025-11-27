@@ -1,4 +1,4 @@
-import { IsString, IsNumber, Length } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVehicleDto {
@@ -11,7 +11,7 @@ export class CreateVehicleDto {
   @IsString()
   model: string;
 
-  @ApiProperty({ description: 'Cor do veículo representada como número' })
-  @IsNumber()
-  color: number;
+  @ApiProperty({ description: 'Cor do veículo' })
+  @IsString()
+  color: string;
 }

@@ -4,6 +4,8 @@ import { envValidationSchema } from './config/env.validation';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { createDataSource } from './config/data.source';
 import { VehiclesModule } from '@modules/Vehicles/vehicles.module';
+import { DriversModule } from '@modules/Drivers/drivers.module';
+import { VehicleUsageModule } from '@modules/VehicleUsage/vehicleUsage.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { VehiclesModule } from '@modules/Vehicles/vehicles.module';
       },
     }),
     VehiclesModule,
+    DriversModule,
+    VehicleUsageModule,
   ],
 })
 export class AppModule {}

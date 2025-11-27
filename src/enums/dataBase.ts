@@ -4,6 +4,8 @@ export enum dataBaseList {
 
 export enum vehicleYardTables {
   vehicles = 'vehicles',
+  drivers = 'drivers',
+  vehicleUsage = 'vehicle_usage',
 }
 
 export const tableList = {
