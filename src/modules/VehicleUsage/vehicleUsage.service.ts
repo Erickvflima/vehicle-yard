@@ -1,6 +1,12 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions } from 'typeorm';
+import { Repository, FindManyOptions, IsNull } from 'typeorm';
 import { IBaseResponse } from '@interfaces/baseResponse';
 import { VehicleUsageEntity } from './entities/vehicleUsage.entity';
 import { VehicleUsageFactory } from './vehicleUsage.factory';
@@ -32,11 +38,41 @@ export class VehicleUsageService {
       };
     }
   }
+  private async validateVehicleIsAvailable(vehicleId: string): Promise<void> {
+    const inUse = await this.usageRepository.findOne({
+      where: {
+        vehicle: { id: vehicleId },
+        endDate: IsNull(),
+      },
+    });
+
+    if (inUse) {
+      throw new BadRequestException('Este veículo já está sendo utilizado.');
+    }
+  }
+
+  private async validateDriverIsAvailable(driverId: string): Promise<void> {
+    const inUse = await this.usageRepository.findOne({
+      where: {
+        driver: { id: driverId },
+        endDate: IsNull(),
+      },
+    });
+
+    if (inUse) {
+      throw new BadRequestException(
+        'Este motorista já está utilizando um veículo.',
+      );
+    }
+  }
 
   async startUsage(
     data: StartUsageDto,
   ): Promise<IBaseResponse<VehicleUsageEntity>> {
     try {
+      await this.validateVehicleIsAvailable(data.vehicleId);
+      await this.validateDriverIsAvailable(data.driverId);
+
       const usage = this.usageRepository.create({
         driver: { id: data.driverId },
         vehicle: { id: data.vehicleId },
@@ -55,7 +91,10 @@ export class VehicleUsageService {
       Logger.error(error);
       return {
         status: 'error',
-        message: 'Failed to start vehicle usage',
+        message:
+          error instanceof HttpException
+            ? error.message
+            : 'Failed to end vehicle usage',
       };
     }
   }
