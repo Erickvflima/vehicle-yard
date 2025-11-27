@@ -19,7 +19,8 @@
       "@modules/*": ["src/modules/*"],
       "@config/*": ["src/config/*"],
       "@enums/*": ["src/enums/*"],
-      "@interface/*": ["src/interface/*"]
+      "@interface/*": ["src/interface/*"],
+      "@decorators/*": ["src/decorators/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

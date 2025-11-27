@@ -81,6 +81,12 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1",
+      "^@decorators/(.*)$": "<rootDir>/decorators/$1",
+      "^@modules/(.*)$": "<rootDir>/modules/$1",
+      "^@enums/(.*)$": "<rootDir>/enums/$1"
+    },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
